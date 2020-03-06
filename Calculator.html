@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script language="JavaScript">
+		var ThisCalc  = document.Calculation; //Определяю объект, с которым буду работать
+		var CurResult = 0; //хранит текущий численный результат
+		var IsNewNumFlag = false; //определяю вводится новое число или нет
+		var OperPending = "";// хранит текущее нажатое значение
+		 
+		//функция обрабатывает кнопки с цифрами
+		function PressedNum (Num) 
+		{
+				if (IsNewNumFlag)//если ввод нового числа, т.е. первой его цифры
+				{
+					ThisCalc.ReadOut.value = Num;
+					IsNewNumFlag = false;
+				}	
+				else {//если не новое
+					if (ThisCalc.ReadOut.value == "0")//если был сброс и стоит 0
+		//то заменяем его на новую цифру
+						ThisCalc.ReadOut.value = Num;
+					Else
+		//иначе дописываем цифры
+						ThisCalc.ReadOut.value += Num;
+				}
+		}
+		 
+		//функция обрабатывает кнопки с арифметическими операциями
+		function Operations (Op) 
+		{
+				var Readout = ThisCalc.ReadOut.value;
+				if (IsNewNumFlag && OperPending != "=")
+				{
+					ThisCalc.ReadOut.value = CurResult;
+				}
+				else
+				{
+					IsNewNumFlag = true;
+					if ( '+' == OperPending )
+						CurResult += parseFloat(Readout);
+					else if ( '-' == OperPending )
+						CurResult -= parseFloat(Readout);
+					else if ( '/' == OperPending )
+						CurResult /= parseFloat(Readout);
+					else if ( '*' == OperPending )
+						CurResult *= parseFloat(Readout);
+					else
+						CurResult = parseFloat(Readout);
+					ThisCalc.ReadOut.value = CurResult;
+					OperPending = Op;
+				}
+		}
+		 
+		 
+		// Очистка текущей цифры
+		function ClearEntry () 
+		{
+				ThisCalc.ReadOut.value = "0";
+				IsNewNumFlag = true;
+		}
+		 
+		// Сброс всех параметров калькулятора
+		function Clear () 
+		{
+				Currents = 0;
+				OperPending = "";
+				ClearEntry();
+		}
+</script>
+</head>
+<body>
+
+	<form name="Calculation" action="">
+     <table class="Table" cellpadding="2" cellspacing="2">
+     <tr>
+         <td colspan=5 align=middle>
+         	<input id="TextEdit" name="ReadOut" type="Text" size=28 value="0" width="250px">
+         </td>
+     </tr>
+     <tr>
+         <td><input name="btnSeven" type="Button" value="7" onclick="PressedNum(7)"></td>
+         <td><input name="btnEight" type="Button" value="8" onclick="PressedNum(8)"></td>
+         <td><input name="btnNine" type="Button" value="9" onclick="PressedNum(9)"></td>
+          <td><input name="btnClear" type="Button" value="C" onclick="Clear()" /></td>
+         <td><input name="btnClearEntry" type="Button" value="CE" onclick="ClearEntry()" /></td>
+       </tr>
+     <tr>
+         <td><input name="btnFour" type="Button" value="4" onclick="PressedNum(4)"></td>
+         <td><input name="btnFive" type="Button" value="5" onclick="PressedNum(5)"></td>
+         <td><input name="btnSix" type="Button" value="6" onclick="PressedNum(6)"></td>
+            <td><input name="btnPlus" type="Button" value="+" onclick="Operations('+')" /></td>
+         <td><input name="btnMultiply" type="Button" value="*" onclick="Operations('*')" /></td>
+     </tr>
+     <tr>
+         <td><input name="btnOne" type="Button" value="1" onclick="PressedNum(1)"></td>
+         <td><input name="btnTwo" type="Button" value="2" onclick="PressedNum(2)"></td>
+         <td><input name="btnThree" type="Button" value="3" onclick="PressedNum(3)"></td>
+          <td><input name="btnMinus" type="Button" value="-" onclick="Operations('-')" /></td>
+         <td ><input name="btnDivide" type="Button" value=" / " onclick="Operations('/')" /></td>
+     </tr>
+     <tr>
+         <td><input name="btnZero" type="Button" value="0" onclick="PressedNum(0)"></td>
+         <td colspan="2"><input id="WideBtn" name="btnEquals" type="Button" value="=" onclick="Operations('=')"></td>
+       <td></td>
+       <td></td>
+     </tr>
+     </table>
+</form>
+<script>
+var x= prompt("Введите x?",100);  
+var y= prompt("Введите y?",100);  
+var z=prompt("введите 1 2 3");
+var result;
+ 
+switch(+z) 
+{
+   case 1 : result = x + y;
+                break; // незабываем про это, а то все выполнять будет
+   case 2 : result = x - y;
+                break;
+   case 3 : result = x * y;
+                break;
+   default: result = x / y // по умолчанию будем делить
+}
+alert(result);
+</script>
+
+<div>Введите первое число</div>
+<div><input type="text" value="" name="one" id="one"></div>
+<div>Введите второе число</div>
+<div><input type="text" value="" name="two" id="two"></div>
+<div>Введите нужное действие<br>сложение вЂ“ 1, вычитание вЂ“ 2, умножение вЂ“ 3, деление вЂ“ 4</div>
+<div><input type="text" value="" name="three" id="three"></div>
+<div><button onclick="clickMe();">Получите результат</button></div>
+<div><input type="text" value="" name="res" id="res"></div>
+
+<script type="text/javascript">
+function clickMe(){
+var v1, v2, v3, v4;
+v1=document.getElementById("one").value;
+v2=document.getElementById("two").value;
+v3=document.getElementById("three").value;
+if(v3!=="1"&&v3!=="2"&&v3!=="3"&&v3!=="4"){alert("Что то вы ввели не то действие"); return};
+if(v3==="1"){v4=(+v1)+(+v2)};
+if(v3==="2"){v4=v1-v2};
+if(v3==="3"){v4=v1*v2};
+if(v3==="4"){v4=v1/v2};
+document.getElementById("res").value=v4;
+ };
+ </script>
+
+</body>
+</html>

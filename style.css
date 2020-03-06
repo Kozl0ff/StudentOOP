@@ -1,0 +1,16 @@
+.Table {
+   	  border: 3px inset gray;
+   	  background: #E6E6FA;
+   	  margin-left: 22%;
+   	  margin-top: 12px;
+   	  width: 270px;
+   	  text-align: center;
+   	}
+
+   	.Table input {
+   	  border: 2px solid gray;
+   	  border-radius: 4px;
+   	  width: 30px;
+   	  margin: 4px;
+		text-align: center;
+   	}
